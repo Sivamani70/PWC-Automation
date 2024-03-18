@@ -101,7 +101,7 @@ class PWCExcelGenerator {
         $this.displayStatus()
     }
 
-    [Void] displayStatus() {
+    [Void]  displayStatus() {
         Write-Host "Total IOCs: $($this.listOfIOCs.Count)" -ForegroundColor Green
         Write-Host "MD5: $($this.MD5.Count)" -ForegroundColor Green
         Write-Host "SHA1: $($this.SHA1.Count)" -ForegroundColor Green
@@ -132,7 +132,7 @@ class PWCExcelGenerator {
                 if ($this.MD5.Count -ne 0) {
                     $row = 2
                     $Col += 2
-                    $cell = $workSheet.Cells.Item($row, $col)
+                    $cell = $workSheet.Cells[$row, $col]
                     $cell.Value = "MD5"
                     $Cell.Interior.ColorIndex = 37
                     $cell.Borders.LineStyle = 1
@@ -141,16 +141,17 @@ class PWCExcelGenerator {
                 
                     forEach ($hash in $this.MD5) {
                         $row++
-                        $workSheet.Cells.Item($row, $col) = $hash
-                        $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                        $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
+                        $cell = $workSheet.Cells[$row, $col]
+                        $cell.Value = $hash
+                        $cell.Borders.LineStyle = 1
+                        $cell.Borders.ColorIndex = 1
                     }
                 }
         
                 if ($this.SHA1.Count -ne 0) {
                     $row = 2
                     $Col += 2
-                    $cell = $workSheet.Cells.Item($row, $col)
+                    $cell = $workSheet.Cells[$row, $col]
                     $cell.Value = "SHA1"
                     $Cell.Interior.ColorIndex = 37
                     $cell.Borders.LineStyle = 1
@@ -159,16 +160,17 @@ class PWCExcelGenerator {
                 
                     forEach ($hash in $this.SHA1) {
                         $row++
-                        $workSheet.Cells.Item($row, $col) = $hash
-                        $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                        $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
+                        $cell = $workSheet.Cells[$row, $col]
+                        $cell.Value = $hash
+                        $cell.Borders.LineStyle = 1
+                        $cell.Borders.ColorIndex = 1
                     }
                 }
                 
                 if ($this.SHA256.Count -ne 0) {
                     $row = 2
                     $Col += 2
-                    $cell = $workSheet.Cells.Item($row, $col)
+                    $cell = $workSheet.Cells[$row, $col]                    
                     $cell.Value = "SHA256"
                     $Cell.Interior.ColorIndex = 37
                     $cell.Borders.LineStyle = 1
@@ -177,16 +179,17 @@ class PWCExcelGenerator {
                 
                     forEach ($hash in $this.SHA256) {
                         $row++
-                        $workSheet.Cells.Item($row, $col) = $hash
-                        $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                        $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
+                        $cell = $workSheet.Cells[$row, $col]
+                        $cell.Value = $hash
+                        $cell.Borders.LineStyle = 1
+                        $cell.Borders.ColorIndex = 1
                     }
                 }
                 
                 if ($this.Domains.Count -ne 0) {
                     $row = 2
                     $Col += 2
-                    $cell = $workSheet.Cells.Item($row, $col)
+                    $cell = $workSheet.Cells[$row, $col]
                     $cell.Value = "Domains"
                     $Cell.Interior.ColorIndex = 37
                     $cell.Borders.LineStyle = 1
@@ -195,16 +198,17 @@ class PWCExcelGenerator {
                 
                     forEach ($domain in $this.Domains) {
                         $row++
-                        $workSheet.Cells.Item($row, $col) = $domain
-                        $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                        $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
+                        $cell = $workSheet.Cells[$row, $col]      
+                        $cell.Value = $domain
+                        $cell.Borders.LineStyle = 1
+                        $cell.Borders.ColorIndex = 1
                     }
                 }
                 
                 if ($this.URLS.Count -ne 0) {
                     $row = 2
                     $Col += 2
-                    $cell = $workSheet.Cells.Item($row, $col)
+                    $cell = $workSheet.Cells[$row, $col] 
                     $cell.Value = "URLs"
                     $Cell.Interior.ColorIndex = 37
                     $cell.Borders.LineStyle = 1
@@ -213,34 +217,36 @@ class PWCExcelGenerator {
                 
                     forEach ($uri in $this.URLs) {
                         $row++
-                        $workSheet.Cells.Item($row, $col) = $uri
-                        $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                        $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
+                        $cell = $workSheet.Cells[$row, $col] 
+                        $cell.Value = $uri
+                        $cell.Borders.LineStyle = 1
+                        $cell.Borders.ColorIndex = 1
                     }
                 }
                 
                 if ($this.Emails.Count -ne 0) {
                     $row = 2
                     $Col += 2
-                    $cell = $workSheet.Cells.Item($row, $col)
+                    $cell = $workSheet.Cells[$row, $col] 
                     $cell.Value = "Emails"
                     $Cell.Interior.ColorIndex = 37
                     $cell.Borders.LineStyle = 1
                     $cell.Borders.ColorIndex = 1
                     $cell.HorizontalAlignment = 3
-                
+
                     forEach ($Email in $this.Emails) {
                         $row++
-                        $workSheet.Cells.Item($row, $col) = $Email
-                        $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                        $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
+                        $cell = $workSheet.Cells[$row, $col] 
+                        $cell.Value = $Email
+                        $cell.Borders.LineStyle = 1
+                        $cell.Borders.ColorIndex = 1
                     }
                 }
                 
                 if ($this.IPS.Count -ne 0) {
                     $row = 2
                     $Col += 2
-                    $cell = $workSheet.Cells.Item($row, $col)
+                    $cell = $workSheet.Cells[$row, $col] 
                     $cell.Value = "IPs"
                     $Cell.Interior.ColorIndex = 37
                     $cell.Borders.LineStyle = 1
@@ -249,9 +255,10 @@ class PWCExcelGenerator {
                 
                     forEach ($IP in $this.IPS) {
                         $row++
-                        $workSheet.Cells.Item($row, $col) = $IP
-                        $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                        $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
+                        $cell = $workSheet.Cells[$row, $col] 
+                        $cell.value = $IP
+                        $cell.Borders.LineStyle = 1
+                        $cell.Borders.ColorIndex = 1
                     }
                 }
                 
@@ -259,7 +266,7 @@ class PWCExcelGenerator {
                 if ($this.OtherIOCs.Count -ne 0) {
                     $row = 2
                     $Col += 2
-                    $cell = $workSheet.Cells.Item($row, $col)
+                    $cell = $workSheet.Cells[$row, $col] 
                     $cell.Value = "Review -- IOC"
                     $Cell.Interior.ColorIndex = 37
                     $cell.Borders.LineStyle = 1
@@ -268,9 +275,10 @@ class PWCExcelGenerator {
                 
                     forEach ($IOC in $this.OtherIOCs) {
                         $row++
-                        $workSheet.Cells.Item($row, $col) = $IOC
-                        $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                        $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
+                        $cell = $workSheet.Cells[$row, $col] 
+                        $cell.Value = $IOC
+                        $cell.Borders.LineStyle = 1
+                        $cell.Borders.ColorIndex = 1
                     }
                 }
         
@@ -281,11 +289,12 @@ class PWCExcelGenerator {
                 $workSheet.Name = "Count"
                 $row = 2
                 $col = 2
-                $workSheet.Cells.Item($row, $col) = "IOC Type"
-                $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
-                $workSheet.Cells.Item($row, $col).Interior.ColorIndex = 37 
-                $workSheet.Cells.Item($row, $col).HorizontalAlignment = 2
+                $cell = $workSheet.Cells[$row, $col] 
+                $cell.Value = "IOC Type"
+                $cell.Borders.LineStyle = 1
+                $cell.Borders.ColorIndex = 1
+                $cell.Interior.ColorIndex = 37 
+                $cell.HorizontalAlignment = 2
                 
                 $workSheet.Cells.Item($row, $col + 1 ) = "Count"
                 $workSheet.Cells.Item($row, $col + 1).Borders.LineStyle = 1
@@ -295,10 +304,11 @@ class PWCExcelGenerator {
            
                 if ($this.MD5.Count -ne 0) {
                     $row += 1
-                    $workSheet.Cells.Item($row, $col) = "MD5"
-                    $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                    $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
-                    $workSheet.Cells.Item($row, $col).HorizontalAlignment = 2
+                    $cell = $workSheet.Cells[$row, $col] 
+                    $cell.Value = "MD5"
+                    $cell.Borders.LineStyle = 1
+                    $cell.Borders.ColorIndex = 1
+                    $cell.HorizontalAlignment = 2
                     $workSheet.Cells.Item($row, $col + 1) = $this.MD5.Count
                     $workSheet.Cells.Item($row, $col + 1).Borders.LineStyle = 1
                     $workSheet.Cells.Item($row, $col + 1).Borders.ColorIndex = 1
@@ -307,10 +317,11 @@ class PWCExcelGenerator {
            
                 if ($this.SHA1.Count -ne 0) {
                     $row += 1
-                    $workSheet.Cells.Item($row, $col) = "SHA1"
-                    $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                    $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
-                    $workSheet.Cells.Item($row, $col).HorizontalAlignment = 2
+                    $cell = $workSheet.Cells[$row, $col] 
+                    $cell.Value = "SHA1"
+                    $cell.Borders.LineStyle = 1
+                    $cell.Borders.ColorIndex = 1
+                    $cell.HorizontalAlignment = 2
                     $workSheet.Cells.Item($row, $col + 1) = $this.SHA1.Count
                     $workSheet.Cells.Item($row, $col + 1).Borders.LineStyle = 1
                     $workSheet.Cells.Item($row, $col + 1).Borders.ColorIndex = 1
@@ -320,10 +331,11 @@ class PWCExcelGenerator {
            
                 if ($this.SHA256.Count -ne 0) {
                     $row += 1
-                    $workSheet.Cells.Item($row, $col) = "SHA256"
-                    $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                    $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
-                    $workSheet.Cells.Item($row, $col).HorizontalAlignment = 2
+                    $cell = $workSheet.Cells[$row, $col] 
+                    $cell.Value = "SHA256"
+                    $cell.Borders.LineStyle = 1
+                    $cell.Borders.ColorIndex = 1
+                    $cell.HorizontalAlignment = 2
                     $workSheet.Cells.Item($row, $col + 1) = $this.SHA256.Count
                     $workSheet.Cells.Item($row, $col + 1).Borders.LineStyle = 1
                     $workSheet.Cells.Item($row, $col + 1).Borders.ColorIndex = 1
@@ -332,10 +344,11 @@ class PWCExcelGenerator {
            
                 if ($this.Domains.Count -ne 0) {
                     $row += 1
-                    $workSheet.Cells.Item($row, $col) = "Domains"
-                    $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                    $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
-                    $workSheet.Cells.Item($row, $col).HorizontalAlignment = 2
+                    $cell = $workSheet.Cells[$row, $col] 
+                    $cell.Value = "Domains"
+                    $cell.Borders.LineStyle = 1
+                    $cell.Borders.ColorIndex = 1
+                    $cell.HorizontalAlignment = 2
                     $workSheet.Cells.Item($row, $col + 1) = $this.Domains.Count
                     $workSheet.Cells.Item($row, $col + 1).Borders.LineStyle = 1
                     $workSheet.Cells.Item($row, $col + 1).Borders.ColorIndex = 1
@@ -344,10 +357,11 @@ class PWCExcelGenerator {
            
                 if ($this.URLS.Count -ne 0) {
                     $row += 1
-                    $workSheet.Cells.Item($row, $col) = "URL"
-                    $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                    $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
-                    $workSheet.Cells.Item($row, $col).HorizontalAlignment = 2
+                    $cell = $workSheet.Cells[$row, $col] 
+                    $cell.Value = "URL"
+                    $cell.Borders.LineStyle = 1
+                    $cell.Borders.ColorIndex = 1
+                    $cell.HorizontalAlignment = 2
                     $workSheet.Cells.Item($row, $col + 1) = $this.URLS.Count
                     $workSheet.Cells.Item($row, $col + 1).Borders.LineStyle = 1
                     $workSheet.Cells.Item($row, $col + 1).Borders.ColorIndex = 1
@@ -356,10 +370,11 @@ class PWCExcelGenerator {
            
                 if ($this.Emails.Count -ne 0) {
                     $row += 1
-                    $workSheet.Cells.Item($row, $col) = "Emails"
-                    $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                    $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
-                    $workSheet.Cells.Item($row, $col).HorizontalAlignment = 2
+                    $cell = $workSheet.Cells[$row, $col] 
+                    $cell.Value = "Emails"
+                    $cell.Borders.LineStyle = 1
+                    $cell.Borders.ColorIndex = 1
+                    $cell.HorizontalAlignment = 2
                     $workSheet.Cells.Item($row, $col + 1) = $this.Emails.Count
                     $workSheet.Cells.Item($row, $col + 1).Borders.LineStyle = 1
                     $workSheet.Cells.Item($row, $col + 1).Borders.ColorIndex = 1
@@ -368,10 +383,11 @@ class PWCExcelGenerator {
            
                 if ($this.IPS.Count -ne 0) {
                     $row += 1
-                    $workSheet.Cells.Item($row, $col) = "IPs"
-                    $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                    $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
-                    $workSheet.Cells.Item($row, $col).HorizontalAlignment = 2
+                    $cell = $workSheet.Cells[$row, $col] 
+                    $cell.Value = "IPs"
+                    $cell.Borders.LineStyle = 1
+                    $cell.Borders.ColorIndex = 1
+                    $cell.HorizontalAlignment = 2
                     $workSheet.Cells.Item($row, $col + 1) = $this.IPS.Count
                     $workSheet.Cells.Item($row, $col + 1).Borders.LineStyle = 1
                     $workSheet.Cells.Item($row, $col + 1).Borders.ColorIndex = 1
@@ -380,10 +396,11 @@ class PWCExcelGenerator {
            
                 if ($this.OtherIOCs.Count -ne 0) {
                     $row += 1
-                    $workSheet.Cells.Item($row, $col) = "Review"
-                    $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                    $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
-                    $workSheet.Cells.Item($row, $col).HorizontalAlignment = 2
+                    $cell = $workSheet.Cells[$row, $col] 
+                    $cell.Value = "Review"
+                    $cell.Borders.LineStyle = 1
+                    $cell.Borders.ColorIndex = 1
+                    $cell.HorizontalAlignment = 2
                     $workSheet.Cells.Item($row, $col + 1) = $this.OtherIOCs.Count
                     $workSheet.Cells.Item($row, $col + 1).Borders.LineStyle = 1
                     $workSheet.Cells.Item($row, $col + 1).Borders.ColorIndex = 1
@@ -392,11 +409,14 @@ class PWCExcelGenerator {
            
                 $row += 1
                 $total = $this.MD5.Count + $this.SHA1.Count + $this.SHA256.Count + $this.Domains.Count + $this.URLS.Count + $this.Emails.Count + $this.IPS.Count + $this.OtherIOCs.Count
-                $workSheet.Cells.Item($row, $col) = "Total"
-                $workSheet.Cells.Item($row, $col).Borders.LineStyle = 1
-                $workSheet.Cells.Item($row, $col).Borders.ColorIndex = 1
-                $workSheet.Cells.Item($row, $col).HorizontalAlignment = 2
-                $workSheet.Cells.Item($row, $col).Interior.ColorIndex = 37 
+
+                $cell = $workSheet.Cells[$row, $col] 
+                $cell.Value = "Total"
+                $cell.Borders.LineStyle = 1
+                $cell.Borders.ColorIndex = 1
+                $cell.HorizontalAlignment = 2
+                $cell.Interior.ColorIndex = 37 
+                
                 $workSheet.Cells.Item($row, $col + 1) = $total
                 $workSheet.Cells.Item($row, $col + 1).Borders.LineStyle = 1
                 $workSheet.Cells.Item($row, $col + 1).Borders.ColorIndex = 1
