@@ -424,6 +424,8 @@ class PWCExcelGenerator {
             }
         }
 
+        $sheetOne = $workbook.Sheets["Sheet1"]
+        $sheetOne.Delete()
         Write-Host "Saving & Closing the WorkBook" -ForegroundColor Green
         $workBook.SaveAs($path)
         $workbook.Close()
