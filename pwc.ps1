@@ -13,7 +13,8 @@ class PWCExcelGenerator {
     Static [String] $EmailValidator = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
     Static [String] $IPV4Validator = "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
     Static [String] $IPV6Validator = "^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))$"
-    [System.Collections.Generic.List[String]] $listOfIOCs
+    [String] $OriginalFilePath
+    [System.Collections.Generic.List[String]] $ListOfIOCs
     [System.Collections.Generic.List[String]] $MD5
     [System.Collections.Generic.List[String]] $SHA1
     [System.Collections.Generic.List[String]] $SHA256
@@ -23,8 +24,9 @@ class PWCExcelGenerator {
     [System.Collections.Generic.List[String]] $Emails
     [System.Collections.Generic.List[String]] $OtherIOCs
     
-    PWCExcelGenerator([String]$pwcFilePath) {
-        $this.listOfIOCs = New-Object System.Collections.Generic.List[String]
+    PWCExcelGenerator([String] $PWCFilePath) {
+        $this.OriginalFilePath = $PWCFilePath
+        $this.ListOfIOCs = New-Object System.Collections.Generic.List[String]
         $this.MD5 = New-Object System.Collections.Generic.List[String]
         $this.SHA1 = New-Object System.Collections.Generic.List[String]
         $this.SHA256 = New-Object System.Collections.Generic.List[String]
@@ -37,12 +39,12 @@ class PWCExcelGenerator {
         # Extracting Values from Original PWC files
         $pwcValues = [PWCValuesExtractor]::new($pwcFilePath)
         $pwcValues.extractValues()
-        $this.listOfIOCs = $pwcValues.getValues()
+        $this.ListOfIOCs = $pwcValues.getValues()
     }
 
     # Seperate/Load IOCs
     [Void] iocsExtractor() {
-        forEach ($ioc in $this.listOfIOCs) {
+        forEach ($ioc in $this.ListOfIOCs) {
             
             $ioc = ($ioc.ToLower()).Trim()
             
@@ -102,7 +104,7 @@ class PWCExcelGenerator {
     }
 
     [Void]  displayStatus() {
-        Write-Host "Total IOCs: $($this.listOfIOCs.Count)" -ForegroundColor Green
+        Write-Host "Total IOCs: $($this.ListOfIOCs.Count)" -ForegroundColor Green
         Write-Host "MD5: $($this.MD5.Count)" -ForegroundColor Green
         Write-Host "SHA1: $($this.SHA1.Count)" -ForegroundColor Green
         Write-Host "SHA256: $($this.SHA256.Count)" -ForegroundColor Green
@@ -116,8 +118,9 @@ class PWCExcelGenerator {
     [Void] generateFile() {
         $excel = New-Object -ComObject Excel.Application
         $workBook = $excel.Workbooks.Add()
-        $currentDateAndTime = Get-Date -Format "dd-MM-yyyy HH:mm:ss"
-        $path = (Get-Location).Path + "\PWC-$currentDateAndTime.xlsx"
+        $CurrentDate = Get-Date -Format "dd-MM-yyyy"
+        $Name = Split-Path -Path $this.OriginalFilePath -Leaf
+        $path = (Get-Location).Path + "\PWC - $CurrentDate - $Name"
         Write-Host "Creating File -- $path" -ForegroundColor Green
         $SheetCount = 2
         
@@ -479,9 +482,11 @@ class PWCValuesExtractor {
         $exitCode = [System.Runtime.InteropServices.Marshal]::ReleaseComObject($excel) 
         Write-Host "Closing the File:[$($this.filePath)] with Exit-Code: $exitCode" -ForegroundColor Yellow
     }
+
     [System.Collections.Generic.List[String]] getValues() { return $this.values }
 }
 
+#Script execution Starts from here. 
 if ((Test-Path -Path "HKLM:\SOFTWARE\Microsoft\Office\*\Excel")) {
     if (!(Test-Path -Path $FullPath)) {
         Write-Error "No Excel File found at the Path: [$FullPath]"
